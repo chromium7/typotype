@@ -1,11 +1,15 @@
 from django.shortcuts import render
-
-# Create your views here.
+from django.contrib.auth.forms import AuthenticationForm
 
 
 def index(request):
-    return render(request, "game/index.html")
+    login_form = AuthenticationForm()
+    return render(request, "game/index.html", {
+        'login_form': login_form,
+        
+    })
 
 
 def register(request):
+    
     return render(request, "game/index.html")

@@ -1,9 +1,30 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block title %}Typo Type{% endblock %}
 
 {% block content %}
 
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            {% if user.is_authenticated %}
+                <h1>Hello {{ user.username }}</h1>
+            {% else %}
+                <form action="#" method="post" class="form-horizontal">
+                    {% csrf_token %}
+                    <h2>Login</h2>
+                    {{ login_form|crispy }}
+                    <button type="submit" class="btn btn-success">Login</button>
+                </form>
+            {% endif %}
+        </div>
+        <div class="col-9">
+            <h2>Pogu</h2>
+        </div>
+    </div>
+</div>
 
 
 {% endblock %}
