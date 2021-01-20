@@ -1,0 +1,17 @@
+$light-blue: rgb(171, 230, 238);
+$dark-blue: rgb(11, 39, 133);
+$light-primary: rgb(236, 247, 253);
+
+#profile-cont {
+  background: $light-blue;
+  padding: 1em;
+  border-radius: 10px;
+}
+
+.badge {
+  font-size: 12px;
+  background: $dark-blue;
+  color: $light-primary;
+  padding: 0.4em 2em;
+  border-radius: 6px;
+}
