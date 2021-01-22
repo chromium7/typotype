@@ -1,7 +1,19 @@
-#profile-cont {
-  background: #abe6ee;
+.bubble {
+  margin-bottom: 2em;
   padding: 1em;
   border-radius: 10px;
+}
+
+.light-grey {
+  background: #c7bbbb;
+}
+
+.light-blue {
+  background: #abe6ee;
+}
+
+.light-green {
+  background: #a2e9a2;
 }
 
 .badge {
@@ -10,5 +22,14 @@
   color: #ecf7fd;
   padding: 0.4em 2em;
   border-radius: 6px;
+}
+
+.blur {
+  -webkit-filter: blur(4px);
+          filter: blur(4px);
+  -ms-user-select: none;
+      user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 }
 /*# sourceMappingURL=base.css.map */

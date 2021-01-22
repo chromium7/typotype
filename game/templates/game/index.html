@@ -15,6 +15,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+        {% elif  status == "nr" %}
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                Failed to register...
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         {% else %}
             <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                 Successfully logged in!
@@ -26,7 +33,7 @@
     {% endif %}
     <div class="row mt-3">
         <div class="col-3">
-            <div id="profile-cont">
+            <div class="bubble light-blue">
                 {% if user.is_authenticated %}
                     <h2>Hello {{ user.username }}</h2>
                     {% if user.is_staff %}
@@ -52,21 +59,76 @@
                         <button type="submit" class="btn btn-danger mt-2">Logout</button>
                     </form>
                 {% else %}
+                    <h2>Login</h2>
                     <form action="{% url 'game:login' %}" method="post" class="form-horizontal">
                         {% csrf_token %}
-                        <h2>Login</h2>
                         {{ login_form|crispy }}
                         <button type="submit" class="btn btn-success">Login</button>
                     </form>
                 {% endif %}
             </div>
-            <div id="leaderboard">
+
+            <div class="bubble light-grey">
+                {% if user.is_authenticated %}
+                    <h2>Recent Activities</h2>
+                    <ul>
+                        <li>Scored 80 on level 3. <small>January 11, 2021. 08:21</small></li>
+                        <li>Scored 73 on level 3. <small>January 10, 2021. 22:02</small></li>
+                        <li>Scored 68 on level 3. <small>January 10, 2021. 18:23</small></li>
+                    </ul>
+                {% else %}
+                    <h2>Register</h2>
+                    <form action="{% url 'game:register' %}" method="post" class="form-horizontal">
+                        {% csrf_token %}
+                        {{ registration_form|crispy }}
+                        <button type="submit" class="btn btn-outline-success">Sign up</button>
+                    </form>
+                {% endif %}
+            </div>
+
+            <div class="bubble light-green">
                 <h2>Leaderboard</h2>
                 <p>very cool</p>
             </div>
         </div>
         <div class="col-9">
-            <h2>Pogu</h2>
+            <h2>Typo Type</h2>
+            <p>Train to reduce mistakes in your typings.</p>
+
+            <hr>
+            {% if user.is_staff %}
+                <div class="badge">Admin</div>
+                <h3>Add new sentences for users to play!</h3>
+                <p>Please enter texts with at least 200 characters</p>
+                <form action="#" method="post">
+                    <textarea name="new-sentence" id="new-sentence" class="form-control" rows="4" placeholder="New texts here"></textarea>
+                    <p>Characters: <span id="new-char-count">0</span>/200</p>
+                    <p>Grade: <span id="new-sentence-level">?</span></p>
+                    <button type="submit" class="btn btn-success">Register new text</button>
+                </form>
+                <hr>
+            {% endif %}
+            <div class="game-container">
+                <h3>Pick a level:</h3>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-outline-info btn-sm active">
+                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Level 1
+                    </label>
+                    <label class="btn btn-outline-warning btn-sm">
+                        <input type="radio" name="options" id="option2" autocomplete="off"> Level 2
+                    </label>
+                    <label class="btn btn-outline-dark btn-sm">
+                        <input type="radio" name="options" id="option3" autocomplete="off"> Level 3
+                    </label>
+                </div>
+                <h5>Sentence:</h5>
+                <div class="blur jumbotron" id="sentence-container">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere expedita totam
+                    commodi assumenda alias soluta maxime perferendis labore! Asperiores, velit.
+                </div>
+                <textarea name="typer" id="typer" class="form-control" rows="4" disabled></textarea>
+                <button id="play" class="btn btn-primary mt-3 btn-block">Play</button>
+            </div>
         </div>
     </div>
 </div>
