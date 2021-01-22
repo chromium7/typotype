@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 
 # Get the reading level of a text using Coleman Liau index
 def reading_level(text):
@@ -27,3 +28,11 @@ def reading_level(text):
         return 2
     else:
         return 3
+
+
+
+def get_rank(user):
+    users = User.objects.all().sorted_by('profile__score')
+    for i, u in enumerate(users):
+        if u == user:
+            return i + 1 
