@@ -32,7 +32,7 @@ def reading_level(text):
 
 
 def get_rank(user):
-    users = User.objects.all().sorted_by('profile__score')
+    users = User.objects.order_by('profile__score').all()
     for i, u in enumerate(users):
         if u == user:
             return i + 1 

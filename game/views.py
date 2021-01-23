@@ -21,11 +21,11 @@ def index(request):
         recent_activities = user.activities.order_by('-created')[:5]
         user_rank = get_rank(user)
 
-        context['activity-count'] = activity_count
-        context['cum-score'] = cum_score
-        context['rec-activities'] = recent_activities
+        context['activity_count'] = activity_count
+        context['cum_score'] = cum_score
+        context['rec_activities'] = recent_activities
         context['rank'] = user_rank
-        
+
     else:
         # Pass login and registration forms
         login_form = AuthenticationForm()
@@ -39,16 +39,19 @@ def index(request):
         context['status'] = request.session['status']
         del request.session['status']
 
+    # Leaderboard
+
     return render(request, "game/index.html", context)
 
 
 @require_POST
 def register_text(request):
     text = request.POST['new-sentence']
-    grade = Grade.objects.get(level=int(request.POST['grade']))
+    grade = Grade.objects.get(level=int(request.POST['new-level-value']))
     entry = Sentence.objects.create(grade=grade, text=text)
     entry.save()
-    return redirect("grame:home")
+    request.session['status'] = 's'
+    return redirect("game:home")
 
 
 @csrf_exempt

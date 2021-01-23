@@ -22,6 +22,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+        {% elif  status == "s" %}
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                Text successfully registered! 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         {% else %}
             <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                 Successfully logged in!
@@ -43,15 +50,15 @@
                     <h5 class="mt-2">Your stats:</h5>
                     <div class="row">
                         <div class="col-8">Games played</div>
-                        <div class="col-4">20</div>
+                        <div class="col-4">{{ activity_count }}</div>
                     </div>
                     <div class="row">
                         <div class="col-8">Cumulative score</div>
-                        <div class="col-4">3982</div>
+                        <div class="col-4">{{ cum_score }}</div>
                     </div>
                     <div class="row">
                         <div class="col-8">Global rank</div>
-                        <div class="col-4">1</div>
+                        <div class="col-4">{{ rank }}</div>
                     </div>
 
                     <form action="{% url 'game:logout' %}" method="post">
@@ -72,9 +79,14 @@
                 {% if user.is_authenticated %}
                     <h2>Recent Activities</h2>
                     <ul>
-                        <li>Scored 80 on level 3. <small>January 11, 2021. 08:21</small></li>
+                        {% for activity in rec_activities %}
+                            <li>Scored bruh</li>
+                        {% empty %}
+                            <li>You haven't played any game yet</li>
+                        {% endfor %}
+                        {% comment %} <li>Scored 80 on level 3. <small>January 11, 2021. 08:21</small></li>
                         <li>Scored 73 on level 3. <small>January 10, 2021. 22:02</small></li>
-                        <li>Scored 68 on level 3. <small>January 10, 2021. 18:23</small></li>
+                        <li>Scored 68 on level 3. <small>January 10, 2021. 18:23</small></li> {% endcomment %}
                     </ul>
                 {% else %}
                     <h2>Register</h2>
@@ -100,11 +112,13 @@
                 <div class="badge">Admin</div>
                 <h3>Add new sentences for users to play!</h3>
                 <p>Please enter texts with at least 200 characters</p>
-                <form action="#" method="post">
+                <form action="{% url "game:register_text" %}" method="post">
+                    {% csrf_token %}
                     <textarea name="new-sentence" id="new-sentence" class="form-control" rows="4" placeholder="New texts here"></textarea>
                     <p>Characters: <span id="new-char-count">0</span>/200</p>
                     <p>Grade: <span id="new-sentence-level">?</span></p>
-                    <button type="submit" class="btn btn-success">Register new text</button>
+                    <input type="hidden" name="new-level-value" id="new-level-value">
+                    <button type="submit" id="new-submit" class="btn btn-success" disabled>Register new text</button>
                 </form>
                 <hr>
             {% endif %}

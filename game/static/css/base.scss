@@ -36,3 +36,8 @@ $light-grey: rgb(199, 187, 187);
   -moz-user-select: none;
   -webkit-user-select: none;
 }
+
+.valid {
+  border: 2px solid green !important;
+  outline: green;
+}
