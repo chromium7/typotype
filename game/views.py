@@ -1,10 +1,12 @@
+from random import randint
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
+from django.http import JsonResponse
 
 from .models import Activity, Profile, Sentence, Grade
 from .forms import UserRegistrationForm
@@ -55,8 +57,20 @@ def register_text(request):
 
 
 @csrf_exempt
-def generate_text(request):
-    return HttpResponse("BRUH", content_type="text/plain")
+def generate_text(request, grade):
+    if grade < 1 or grade > 3:
+        return JsonResponse({'msg': 'Invalid sentence grade. Should be between 1 and 3 inclusive.'})
+
+    grade_object = Grade.objects.get(level=grade)
+    sentences = Sentence.objects.filter(grade=grade_object)
+    count = sentences.count()
+    rand = randint(0, count-1)
+
+    sentence = sentences[rand]
+    data = {
+        'sentence': sentence.text
+    }
+    return JsonResponse(data)
 
 
 @require_POST

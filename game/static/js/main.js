@@ -1,6 +1,9 @@
 // If admin
 console.log("sanity check");
 
+// Initially load grade 1 text
+get_text(1);
+
 if (document.querySelector("#new-sentence")) {
   var new_textarea = document.querySelector("#new-sentence");
   var new_charcount = document.querySelector("#new-char-count");
@@ -49,11 +52,24 @@ function grade(text) {
   var S = (sentence_count / word_count) * 100;
   index = Math.round(0.0588 * L - 0.296 * S - 15.8);
 
-  if (index <= 3) {
+  if (index <= 6) {
     return 1;
-  } else if (index <= 7) {
+  } else if (index <= 10) {
     return 2;
   } else {
     return 3;
   }
+}
+
+function get_text(grade) {
+  fetch(`/generate_text/${grade}/`, {
+    headers: {
+      Accept: "application/json",
+      "X-Requested-With": "XMLHttpRequest",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      document.querySelector("#sentence-container").textContent = data.sentence;
+    });
 }
