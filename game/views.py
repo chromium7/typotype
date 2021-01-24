@@ -44,7 +44,7 @@ def index(request):
 
     # Leaderboard
     context['leaderboard'] = User.objects.order_by('-profile__score').all()[:5]
-    
+
     return render(request, "game/index.html", context)
 
 
@@ -80,6 +80,11 @@ def generate_text(request, grade):
 def submit_activity(request):
     # Get the data
     user = request.user
+
+    if not user.is_authenticated:
+        # If not logged in, dont submit to database
+        return JsonResponse({'msg': 'Not logged in'})
+
     post_data = json.loads(request.body.decode('utf-8'))
     grade = Grade.objects.get(level=post_data['grade'])
 
