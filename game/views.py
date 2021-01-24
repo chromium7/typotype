@@ -43,7 +43,8 @@ def index(request):
         del request.session['status']
 
     # Leaderboard
-
+    context['leaderboard'] = User.objects.order_by('-profile__score').all()[:5]
+    
     return render(request, "game/index.html", context)
 
 

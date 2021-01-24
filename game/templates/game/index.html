@@ -80,13 +80,13 @@
                     <h2>Recent Activities</h2>
                     <ul>
                         {% for activity in rec_activities %}
-                            <li>Scored bruh</li>
+                            <li>
+                                Scored {{ activity.score }} on level {{ activity.grade.level }}.
+                                <br><small>{{ activity.created }}</small>
+                            </li>
                         {% empty %}
                             <li>You haven't played any game yet</li>
                         {% endfor %}
-                        {% comment %} <li>Scored 80 on level 3. <small>January 11, 2021. 08:21</small></li>
-                        <li>Scored 73 on level 3. <small>January 10, 2021. 22:02</small></li>
-                        <li>Scored 68 on level 3. <small>January 10, 2021. 18:23</small></li> {% endcomment %}
                     </ul>
                 {% else %}
                     <h2>Register</h2>
@@ -100,7 +100,13 @@
 
             <div class="bubble light-green">
                 <h2>Leaderboard</h2>
-                <p>very cool</p>
+                <ol>
+                    {% for leader in leaderboard %}
+                        <li>{{ leader.username }}: <small>{{ leader.profile.score }}</small></li>
+                    {% empty %}
+                        <p>Yikes no player yet</p>
+                    {% endfor %}
+                </ol>
             </div>
         </div>
         <div class="col-9">
