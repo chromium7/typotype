@@ -1,6 +1,6 @@
 # Typo Type
 
-#### Video Demo:
+#### Video Demo: https://youtu.be/uFTRoc1gaJE
 
 #### Description:
 
