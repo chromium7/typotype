@@ -1,3 +1,4 @@
+import json
 from random import randint
 
 from django.shortcuts import render, redirect
@@ -49,6 +50,7 @@ def index(request):
 @require_POST
 def register_text(request):
     text = request.POST['new-sentence']
+    text = " ".join(text.split())
     grade = Grade.objects.get(level=int(request.POST['new-level-value']))
     entry = Sentence.objects.create(grade=grade, text=text)
     entry.save()
@@ -75,7 +77,20 @@ def generate_text(request, grade):
 
 @require_POST
 def submit_activity(request):
-    pass
+    # Get the data
+    user = request.user
+    post_data = json.loads(request.body.decode('utf-8'))
+    grade = Grade.objects.get(level=post_data['grade'])
+
+    # Create new activity
+    new_activity = Activity.objects.create(
+        user=user, grade=grade, score=post_data['score'])
+    new_activity.save()
+
+    data = {
+        'msg': 'Activity submitted'
+    }
+    return JsonResponse(data)
 
 
 @require_POST

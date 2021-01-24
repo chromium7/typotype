@@ -1,6 +1,7 @@
 $light-blue: rgb(171, 230, 238);
 $dark-blue: rgb(11, 39, 133);
 $light-green: rgb(162, 233, 162);
+$green-primary: rgb(34, 240, 34);
 $light-primary: rgb(236, 247, 253);
 $light-grey: rgb(199, 187, 187);
 
@@ -38,6 +39,24 @@ $light-grey: rgb(199, 187, 187);
 }
 
 .valid {
-  border: 2px solid green !important;
-  outline: green;
+  border: 2px solid $green-primary !important;
+  outline: $green-primary;
+}
+
+.correct {
+  color: $green-primary;
+}
+
+.wrong {
+  color: red;
+}
+
+.jumbotron {
+  position: relative;
+}
+
+#score {
+  font-size: 2em;
+  font-weight: 700;
+  text-align: center;
 }

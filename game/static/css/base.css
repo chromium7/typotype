@@ -34,7 +34,25 @@
 }
 
 .valid {
-  border: 2px solid green !important;
-  outline: green;
+  border: 2px solid #22f022 !important;
+  outline: #22f022;
+}
+
+.correct {
+  color: #22f022;
+}
+
+.wrong {
+  color: red;
+}
+
+.jumbotron {
+  position: relative;
+}
+
+#score {
+  font-size: 2em;
+  font-weight: 700;
+  text-align: center;
 }
 /*# sourceMappingURL=base.css.map */

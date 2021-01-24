@@ -11,8 +11,9 @@ def create_user_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
 
 
-@receiver(post_save, sender=Activity)
-def update_user_score(sender, instance, **kwargs):
-    profile = Profile.objects.get(user=instance.user)
-    profile.score += instance.score
-    profile.save()
+@receiver(post_save, sender=Activity, dispatch_uid="updateprofilescore")
+def update_user_score(sender, instance, created, **kwargs):
+    if created:
+        profile = Profile.objects.get(user=instance.user)
+        profile.score += instance.score
+        profile.save()
