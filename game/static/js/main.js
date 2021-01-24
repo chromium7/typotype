@@ -1,5 +1,10 @@
-// If admin
-console.log("sanity check");
+// Variables
+var sentenceCont = document.querySelector("#sentence-container");
+var gradeOptions = [
+  document.querySelector("#option1"),
+  document.querySelector("#option2"),
+  document.querySelector("#option3"),
+];
 
 // Initially load grade 1 text
 get_text(1);
@@ -30,6 +35,12 @@ if (document.querySelector("#new-sentence")) {
   });
 }
 
+// Generate text depending on grade selected
+gradeOptions[0].addEventListener("click", () => get_text(1));
+gradeOptions[1].addEventListener("click", () => get_text(2));
+gradeOptions[2].addEventListener("click", () => get_text(3));
+
+// Function for grading a text
 function grade(text) {
   // Formula: 0.0588 * L - 0.296 * S - 15.8
   // L is the average number of letters per 100 words in the text
@@ -61,6 +72,8 @@ function grade(text) {
   }
 }
 
+// Function for getting text
+
 function get_text(grade) {
   fetch(`/generate_text/${grade}/`, {
     headers: {
@@ -70,6 +83,6 @@ function get_text(grade) {
   })
     .then((response) => response.json())
     .then((data) => {
-      document.querySelector("#sentence-container").textContent = data.sentence;
+      sentenceCont.textContent = data.sentence;
     });
 }
